@@ -10,7 +10,6 @@ routes.get('/', (_req, res) => {
     const talker = JSON.parse(readFile);
     res.status(200).json(talker);
 });
-
 routes.get('/search', (req, res) => {
     const { name } = req.query;
     const readFile = fs.readFileSync(talkerData);
