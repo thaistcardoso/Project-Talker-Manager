@@ -1,3 +1,4 @@
 const talker = require('./talker');
+const login = require('./login');
 
-module.exports = talker;
+module.exports = { talker, login };

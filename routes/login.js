@@ -1,11 +1,11 @@
 const express = require('express');
+const { validateEmail, validatePassword } = require('../middlewares/index');
 
-const routes = express.Router();
-// const talkerData = 'talker.json';
+const router = express.Router();
 
-// routes.post('/', (req, res) => {
-    // const { email, password } = req.body;
-    
-// });
+router.post('/', validateEmail, validatePassword, (req, res) => {
+    const randomToken = req.token;
+    res.status(200).json({ token: randomToken });    
+});
 
-module.exports = routes;
+module.exports = router;
