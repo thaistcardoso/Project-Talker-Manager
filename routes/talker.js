@@ -69,6 +69,7 @@ validateTalk, validateRate, validateWatchedAt, (req, res) => {
 
     const readFile = fs.readFileSync(talkerData);
     const talker = JSON.parse(readFile);
+    // console.log(talker);
 
     const talkerIndex = talker.findIndex((user) => user.id === Number(id));
 
@@ -76,8 +77,9 @@ validateTalk, validateRate, validateWatchedAt, (req, res) => {
         return res.status(404).json({ message: 'A pessoa palestrante não encontrada' });
     }
 
-    talker[talkerIndex] = { ...talker[talkerIndex], name, age, talk };
-
+    talker[talkerIndex] = { id: +id, name, age, talk };
+    fs.writeFileSync(talkerData, JSON.stringify(talker));
+    console.log(talker[talkerIndex]);
     res.status(200).json(talker[talkerIndex]);
 });
 

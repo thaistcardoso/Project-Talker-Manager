@@ -6,7 +6,7 @@ function validateTalk(req, res, next) {
             { message: 'O campo "talk" é obrigatório e "watchedAt" e "rate" não podem ser vazios' },
             );
     }
-    next();
+    return next();
 }
 
 module.exports = validateTalk;
