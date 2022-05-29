@@ -83,4 +83,22 @@ validateTalk, validateRate, validateWatchedAt, (req, res) => {
     res.status(200).json(talker[talkerIndex]);
 });
 
+routes.delete('/:id', authorizationToken, (req, res) => { 
+    const { id } = req.params;
+
+    const readFile = fs.readFileSync(talkerData);
+    const talker = JSON.parse(readFile);
+    
+    const talkerIndex = talker.findIndex((user) => user.id === Number(id));
+
+    if (talkerIndex === -1) {
+        return res.status(404).json({ message: 'A pessoa palestrante não encontrada' });
+    }
+
+    talker.splice(talkerIndex, 1);
+    const convertTalker = JSON.stringify(talker);
+    fs.writeFileSync(talkerData, convertTalker);
+    res.status(204).end();
+});
+
 module.exports = routes;
