@@ -14,17 +14,17 @@ routes.get('/', (_req, res) => {
     const talker = JSON.parse(readFile);
     res.status(200).json(talker);
 });
-routes.get('/search', (req, res) => {
+routes.get('/search', authorizationToken, (req, res) => {
     const readFile = fs.readFileSync(talkerData);
     const talker = JSON.parse(readFile);
-    const { name } = req.query;
+    const { q } = req.query;
 
-    if (name === '' || undefined) {
+    if (q === undefined || q === '') {
         return res.status(200).json(talker);
     }
 
-    const talkerperson = talker.filter((user) =>
-        user.name.toLowerCase().includes(name.toLocaleLowerCase()));
+    const talkerperson = talker.filter((user) => 
+        user.name.toLowerCase().includes(q.toLocaleLowerCase()));
 
     res.status(200).json(talkerperson);
 });
